@@ -45,10 +45,10 @@ public class Utility {
 			if(allCities!=null && allCities.length>0) {
 				for(String c : allCities) {
 					String[] array = c.split("\\|");
-					City city = new City();
-					city.setProvinceId(provinceId);
+					City city = new City();				
 					city.setCityCode(array[0]);
 					city.setCityName(array[1]);
+					city.setProvinceId(provinceId);
 					coolWeatherDB.saveCity(city);
 				}
 				return true;
@@ -68,9 +68,9 @@ public class Utility {
 				for(String c : allCounties) {
 					String[] array = c.split("\\|");
 					County county = new County();
-					county.setCityId(cityId);
 					county.setCountyCode(array[0]);
 					county.setCountyName(array[1]);
+					county.setCityId(cityId);
 					coolWeatherDB.saveCounty(county);
 				}
 				return true;

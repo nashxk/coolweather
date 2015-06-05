@@ -210,7 +210,7 @@ public class ChooseAreaActivity extends Activity {
 	private void showProgressDialog() {
 		if(progressDialog == null) {
 			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("Loading...");
+			progressDialog.setMessage("е§дкМгди...");
 			progressDialog.setCanceledOnTouchOutside(false);
 		}
 		progressDialog.show();
