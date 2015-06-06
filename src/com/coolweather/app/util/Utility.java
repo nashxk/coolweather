@@ -3,6 +3,7 @@ package com.coolweather.app.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.coolweather.app.db.CoolWeatherDB;
 import com.coolweather.app.model.City;
@@ -126,7 +128,16 @@ public class Utility {
 	 */
 	public static void saveWeatherInfo(Context context, String cityName, 
 			String weatherCode, String temp1, String temp2, String weatherDesp, String publishTime) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日", Locale.US);
+		
+		/**
+		 * 突然发现，在真机上日期显示正常，但是虚拟机上显示不正常。
+		 * 
+		 * 这样才能正常显示本地日期。
+		 * */
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		Date date = new Date();
+		
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 		editor.putBoolean("city_selected", true);
 		editor.putString("city_name", cityName);
@@ -135,7 +146,9 @@ public class Utility {
 		editor.putString("temp2", temp2);
 		editor.putString("weather_desp", weatherDesp);
 		editor.putString("publish_time", publishTime);
-		editor.putString("current_date", sdf.format(new Date()));
+		//editor.putString("current_date", sdf.format(new Date()));			这样显示的时间是格林尼治时间。
+		editor.putString("current_date", sdf.format(date));
+		Log.d("WeatherActivity", date.toString());
 		editor.commit();
 	}
 	
